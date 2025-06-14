@@ -1,2 +1,5 @@
-# APIpractice
-Basic project to test out any future apis for any future project. Contains test APIs currently.
+# API_practice
+A very basic project to practice and test various apis.
+
+
+This is just to get used to apis to add them in future projects.
