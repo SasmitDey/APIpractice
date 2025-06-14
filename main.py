@@ -121,3 +121,30 @@ def YeYe_quote():
 """
     ADD SWITCH CASE TO LET USER CHOOSE WHAT FUNCTION TO CALL
 """
+print("Enter your choice: \n" \
+"1. APOD" \
+"2. Cat facts" \
+"3. Dog facts" \
+"4. Number facts" \
+"5. YeYe quotes" \
+"6. Random duck image" \
+"7. Exit")
+ch = int(input())
+while(True):
+    match ch:
+        case 1:
+            APOD()
+        case 2:
+            cat_facts()
+        case 3:
+            dog_facts()
+        case 4:
+            number_fact()
+        case 5:
+            YeYe_quote()
+        case 6:
+            duck_img()
+        case 7:
+            break
+        case _:
+            print("Invalid input. Try again")
