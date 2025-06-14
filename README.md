@@ -16,4 +16,6 @@ APIs used:
 
 -Random Duck Image - Does exactly what it says
 
--PoetryDB - The latest and longest API code as of writing. Good website with a decently sized database of poets and their poems
+-PoetryDB - The latest(no longer) and longest API code as of writing. Good website with a decently sized database of poets and their poems
+
+-IP tracker - Found this cool website that returns data such as location, provider, proxyUse, vpnUse, torUse and other cool data from ip address (public obviously)
