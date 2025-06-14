@@ -24,7 +24,8 @@ def APOD():
     response = requests.get(img_url)
     img = Image.open(BytesIO(response.content))
 
-    img.show()
+    img.show() 
+    return
 # APOD()
 
 
@@ -36,6 +37,7 @@ def cat_facts():
     sp = BeautifulSoup(req.content, 'html.parser')
 
     print(sp.prettify())
+    return
 
 # cat_facts()
 
@@ -50,7 +52,8 @@ def dog_facts():
     response = req.json()
 
     fact = response["data"][0]["attributes"]["body"]
-    print(fact)
+    print("\n"+fact)
+    return
 
 # dog_facts()
 
@@ -65,6 +68,7 @@ def duck_img():
 
     img = Image.open(BytesIO(imgRes.content))
     img.show()
+    return
 
 # duck_img()
 
@@ -104,6 +108,7 @@ def number_fact():
     req = requests.get(link)
     response = req.text
     print(response)
+    return
 
 
 # number_fact()
@@ -113,7 +118,9 @@ def YeYe_quote():
     req = requests.get(url)
 
     data = req.json()
-    print(data["quote"])
+    print("\n"+data["quote"])
+    print(" "*len(data["quote"])+"-YeYe")
+    return
 
 # YeYe_quote()
 
@@ -121,21 +128,27 @@ def YeYe_quote():
 """
     ADD SWITCH CASE TO LET USER CHOOSE WHAT FUNCTION TO CALL
 """
-print("Enter your choice: \n" \
-"1. APOD" \
-"2. Cat facts" \
-"3. Dog facts" \
-"4. Number facts" \
-"5. YeYe quotes" \
-"6. Random duck image" \
-"7. Exit")
-ch = int(input())
+
+
 while(True):
+    print("\n\nEnter your choice: \n" \
+    "1. APOD" \
+    " 2. Cat facts (not working rn)" \
+    " 3. Dog facts" \
+    " 4. Number facts" \
+    " 5. YeYe quotes" \
+    " 6. Random duck image" \
+    " 7. Exit")
+    try:
+        ch = int(input())
+    except ValueError:
+        print("Invalid input. Enter a number...")
     match ch:
         case 1:
             APOD()
         case 2:
-            cat_facts()
+            print("API Endpoint not working")
+            # cat_facts()
         case 3:
             dog_facts()
         case 4:
