@@ -5,6 +5,7 @@ A very basic project to practice and test various apis.
 This is just to get used to apis to add them in future projects.
 
 APIs used:
+
 -NASA (Astronomical Picture of The Day) - How this project started, just wanted to try out NASA's API
 
 -Dog Facts - Found a public api with random dog facts
