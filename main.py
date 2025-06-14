@@ -7,9 +7,10 @@ from io import BytesIO
 
 load_dotenv()
 
-nasa_api = os.getenv("secret_nasa_key")
+
 
 def APOD():
+    nasa_api = os.getenv("secret_nasa_key")
     url = "https://apod.nasa.gov/apod"
     
     params = {
@@ -28,10 +29,11 @@ def APOD():
     img = Image.open(BytesIO(response.content))
 
     img.show() 
+    input("\n\nEnter any key to continue ")
     return
 # APOD()
 
-
+#CatFacts API deprecated 
 def cat_facts():
     url = "https://cat-fact.herokuapp.com"
     fact_link = "https://cat-fact.herokuapp.com/facts/random"
@@ -40,6 +42,7 @@ def cat_facts():
     sp = BeautifulSoup(req.content, 'html.parser')
 
     print(sp.prettify())
+    input("\n\nEnter any key to continue ")
     return
 
 # cat_facts()
@@ -56,6 +59,7 @@ def dog_facts():
 
     fact = response["data"][0]["attributes"]["body"]
     print("\n"+fact)
+    input("\n\nEnter any key to continue ")
     return
 
 # dog_facts()
@@ -71,6 +75,7 @@ def duck_img():
 
     img = Image.open(BytesIO(imgRes.content))
     img.show()
+    input("\n\nEnter any key to continue ")
     return
 
 # duck_img()
@@ -111,6 +116,7 @@ def number_fact():
     req = requests.get(link)
     response = req.text
     print(response)
+    input("\n\nEnter any key to continue ")
     return
 
 
@@ -123,9 +129,97 @@ def YeYe_quote():
     data = req.json()
     print("\n"+data["quote"])
     print(" "*len(data["quote"])+"-YeYe")
+    input("\n\nEnter any key to continue ")
     return
 
 # YeYe_quote()
+
+
+def poem_api():
+    url = "https://poetrydb.org/"
+    finLink = ""
+
+    print("What would you like to do?\n" \
+    "1. Check list of poets\n" \
+    "2. Get poems by poets\n" \
+    "3. Get particular poem by poet\n" \
+    "4. Get poem by poem title")
+
+
+    checkList = int(input())
+    match checkList:
+        case 1:
+            finLink = url + "author"
+            req = requests.get(finLink)
+            response = req.json()
+
+            firstLetter = input("List by first letter? (yes/no): ")
+            if firstLetter.lower() == 'no':
+                print()
+                print("--------------------List of poets--------------------")
+                for author in response["authors"]:
+                    print(author)
+            else:
+                firstLetterInput = input("Enter first letter: ")
+                print()
+                print(f"--------------------List of poets beginning with {firstLetterInput}--------------------")
+                for author in response["authors"]:
+                    if author[0].lower() == firstLetterInput.lower():
+                        print(author)
+
+        case 2:
+            poetName = input("Enter poet name: ")
+            finLink = url + f"author/{poetName}/title"
+            req = requests.get(finLink)
+            response = req.json()
+           
+            try:
+                if response['status']==404:
+                    print("Poet does not exist in database. Recommend checking out poet list first.")
+            except TypeError:
+                print()
+                print(f"--------------------List of poems by {poetName}--------------------")
+                for item in response:
+                    print(item["title"])
+        
+        case 3:
+            poetName = input("Enter name of poet: ")
+            poemName = input("Enter name of poem: ")
+            finLink = url + f"author,title/{poetName};{poemName}"
+            req = requests.get(finLink)
+            response = req.json()
+
+            try:
+                if response['status']==404:
+                    print("Error. Either poet or poem is not in database. Recommend checking poet(1) or poem(2) list from database.")
+            except TypeError:
+                print()
+                print(f"--------------------{poemName.title()}--------------------\n\n")
+                for lines in response[0]['lines']:
+                    print(lines)
+
+        case 4:
+            poemName = input("Enter poem name: ")   
+            finLink = url + f"title/{poemName}"
+            req = requests.get(finLink)
+            response = req.json()
+
+            try:
+                if response['status']==404:
+                    print("Poem not found in database. Recommend looking at poems in database first.")
+            except TypeError:
+                print()
+                print(f"--------------------{poemName.title()}--------------------\n\n")
+                for lines in response[0]['lines']:
+                    print(lines)
+        case _:
+            print("Enter valid input (yes/no)")
+    input("\n\nEnter any key to continue ")
+    return
+
+# poem_api()
+
+
 
 
 """
@@ -135,13 +229,15 @@ def YeYe_quote():
 
 while(True):
     print("\n\nEnter your choice: \n" \
-    "1. APOD" \
-    " 2. Cat facts (not working rn)" \
-    " 3. Dog facts" \
-    " 4. Number facts" \
-    " 5. YeYe quotes" \
-    " 6. Random duck image" \
-    " 7. Exit")
+    " 1. APOD\n" \
+    " 2. Cat facts (not working rn)\n" \
+    " 3. Dog facts\n" \
+    " 4. Number facts\n" \
+    " 5. YeYe quotes\n" \
+    " 6. Random duck image\n" \
+    " 7. PoetryDB\n" \
+    " 0. Exit")
+    print()
     try:
         ch = int(input())
     except ValueError:
@@ -161,6 +257,8 @@ while(True):
         case 6:
             duck_img()
         case 7:
+            poem_api()
+        case 0:
             break
         case _:
             print("Invalid input. Try again")
