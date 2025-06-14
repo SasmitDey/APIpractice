@@ -1,16 +1,20 @@
 from bs4 import BeautifulSoup
 import requests
+from dotenv import load_dotenv
+import os
 from PIL import Image
 from io import BytesIO
 import api
 
+load_dotenv()
 
+secret_nasa_key = os.getenv("secret_nasa_key")
 
 def APOD():
     url = "https://apod.nasa.gov/apod"
     
     params = {
-        'api_key': api.secret_nasa_key
+        'api_key': secret_nasa_key
 
     }
 
