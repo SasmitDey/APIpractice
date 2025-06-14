@@ -7,13 +7,13 @@ from io import BytesIO
 
 load_dotenv()
 
-secret_nasa_key = os.getenv("secret_nasa_key")
+nasa_api = os.getenv("secret_nasa_key")
 
 def APOD():
     url = "https://apod.nasa.gov/apod"
     
     params = {
-        'api_key': secret_nasa_key
+        'api_key': nasa_api
 
     }
 
