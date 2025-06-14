@@ -29,7 +29,6 @@ def APOD():
     img = Image.open(BytesIO(response.content))
 
     img.show() 
-    input("\n\nEnter any key to continue ")
     return
 # APOD()
 
@@ -42,7 +41,6 @@ def cat_facts():
     sp = BeautifulSoup(req.content, 'html.parser')
 
     print(sp.prettify())
-    input("\n\nEnter any key to continue ")
     return
 
 # cat_facts()
@@ -59,7 +57,6 @@ def dog_facts():
 
     fact = response["data"][0]["attributes"]["body"]
     print("\n"+fact)
-    input("\n\nEnter any key to continue ")
     return
 
 # dog_facts()
@@ -75,7 +72,6 @@ def duck_img():
 
     img = Image.open(BytesIO(imgRes.content))
     img.show()
-    input("\n\nEnter any key to continue ")
     return
 
 # duck_img()
@@ -116,7 +112,6 @@ def number_fact():
     req = requests.get(link)
     response = req.text
     print(response)
-    input("\n\nEnter any key to continue ")
     return
 
 
@@ -129,7 +124,6 @@ def YeYe_quote():
     data = req.json()
     print("\n"+data["quote"])
     print(" "*len(data["quote"])+"-YeYe")
-    input("\n\nEnter any key to continue ")
     return
 
 # YeYe_quote()
@@ -214,11 +208,30 @@ def poem_api():
                     print(lines)
         case _:
             print("Enter valid input (yes/no)")
-    input("\n\nEnter any key to continue ")
     return
 
 # poem_api()
 
+def ip_tracker():
+    api_key = os.getenv('ip_api_key')
+    url = "https://iplocate.io/api/lookup/"
+    params={
+        'apikey':api_key
+    }
+    opChoice = int(input("\n" \
+    "1. Lookup from ip address\n" \
+    "2. Lookup own ip address\n"))
+    match opChoice:
+        case 1:
+            print("In development")
+        case 2:
+            req = requests.get(url,params=params)
+            response = req.json()
+            print("Your public IP: "+response['ip'])
+        case _:
+            print("Invalid input. Try again...")
+
+    return
 
 
 
@@ -228,6 +241,7 @@ def poem_api():
 
 
 while(True):
+    input("\nEnter any key to continue....")
     print("\n\nEnter your choice: \n" \
     " 1. APOD\n" \
     " 2. Cat facts (not working rn)\n" \
@@ -236,6 +250,7 @@ while(True):
     " 5. YeYe quotes\n" \
     " 6. Random duck image\n" \
     " 7. PoetryDB\n" \
+    " 8. IP location tracker\n" \
     " 0. Exit")
     print()
     try:
@@ -258,6 +273,8 @@ while(True):
             duck_img()
         case 7:
             poem_api()
+        case 8:
+            ip_tracker()
         case 0:
             break
         case _:
