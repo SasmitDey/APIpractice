@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import os
 from PIL import Image
 from io import BytesIO
+import json   #simplify response 
 
 load_dotenv()
 
@@ -223,7 +224,22 @@ def ip_tracker():
     "2. Lookup own ip address\n"))
     match opChoice:
         case 1:
-            print("In development")
+            ip = input("Enter ip address: ")
+            finLink = url + f"{ip}"
+            req = requests.get(finLink,params=params)
+            response = req.json()
+            
+            # print(json.dumps(response,indent=4))
+
+            print(f"\nIP address: {response['ip']}")
+            print(f"\nCountry: {response['country']}")
+            print(f"\nCity: {response['city']}")
+            print(f"\nLatitude: {response['latitude']}")
+            print(f"\nLongitude: {response['longitude']}")
+            print(f"\nISP: {response['asn']['name']}")
+            print()
+            for key, value in response['privacy'].items():
+                print(f"{key}: {value}")
         case 2:
             req = requests.get(url,params=params)
             response = req.json()
